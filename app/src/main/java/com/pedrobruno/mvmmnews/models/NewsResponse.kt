@@ -1,4 +1,4 @@
-package com.pedrobruno.mvmmnews
+package com.pedrobruno.mvmmnews.models
 
 data class NewsResponse(
     val articles: List<Article>,

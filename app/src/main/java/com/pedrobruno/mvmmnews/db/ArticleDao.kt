@@ -2,7 +2,7 @@ package com.pedrobruno.mvmmnews.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.pedrobruno.mvmmnews.Article
+import com.pedrobruno.mvmmnews.models.Article
 
 @Dao
 interface ArticleDao {

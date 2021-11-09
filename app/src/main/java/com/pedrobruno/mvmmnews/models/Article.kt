@@ -1,4 +1,4 @@
-package com.pedrobruno.mvmmnews
+package com.pedrobruno.mvmmnews.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
