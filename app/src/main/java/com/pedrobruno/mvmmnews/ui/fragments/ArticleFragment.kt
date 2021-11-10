@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.pedrobruno.mvmmnews.databinding.FragmentArticleBinding
+import com.pedrobruno.mvmmnews.models.Article
 import com.pedrobruno.mvmmnews.ui.NewsActivity
 import com.pedrobruno.mvmmnews.ui.NewsViewModel
 
 class ArticleFragment : Fragment() {
     private lateinit var binding: FragmentArticleBinding
     private lateinit var viewModel: NewsViewModel
+    val args: ArticleFragmentArgs by navArgs()
+    private lateinit var article: Article
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,5 +30,18 @@ class ArticleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
+        getBundle()
+        setupWebView()
+    }
+
+    fun getBundle(){
+        article = args.article
+    }
+
+    fun setupWebView(){
+        binding.webView.apply {
+            webViewClient = WebViewClient()
+            loadUrl(article.url)
+        }
     }
 }

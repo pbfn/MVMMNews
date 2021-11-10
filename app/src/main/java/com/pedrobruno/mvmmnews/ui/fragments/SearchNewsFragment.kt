@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pedrobruno.mvmmnews.R
 import com.pedrobruno.mvmmnews.adapters.NewsAdapter
 import com.pedrobruno.mvmmnews.databinding.FragmentSearchNewsBinding
 import com.pedrobruno.mvmmnews.ui.NewsActivity
@@ -48,9 +50,21 @@ class SearchNewsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
+        setupClickAdapter()
         binding.rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+    }
+    private fun setupClickAdapter() {
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleFragment,
+                bundle
+            )
         }
     }
 

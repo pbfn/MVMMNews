@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pedrobruno.mvmmnews.R
 import com.pedrobruno.mvmmnews.adapters.NewsAdapter
 import com.pedrobruno.mvmmnews.databinding.FragmentBreakingNewsBinding
 import com.pedrobruno.mvmmnews.ui.NewsActivity
@@ -42,9 +44,22 @@ class BreakingNewsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
+        setupClickAdapter()
         binding.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+    }
+
+    private fun setupClickAdapter() {
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment,
+                bundle
+            )
         }
     }
 
@@ -60,10 +75,10 @@ class BreakingNewsFragment : Fragment() {
                 is Resource.Error -> {
                     hideProgessBar()
                     response.message?.let { message ->
-                        Log.e(TAG,"Ocorreu um erro $message")
+                        Log.e(TAG, "Ocorreu um erro $message")
                     }
                 }
-                is Resource.Loading ->{
+                is Resource.Loading -> {
                     showProgessBar()
                 }
             }
