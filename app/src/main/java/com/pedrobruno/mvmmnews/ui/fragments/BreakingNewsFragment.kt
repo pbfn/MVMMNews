@@ -37,9 +37,7 @@ class BreakingNewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
-
         observeData()
-
     }
 
     private fun setupRecyclerView() {

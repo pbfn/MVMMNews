@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.pedrobruno.mvmmnews.databinding.FragmentArticleBinding
 import com.pedrobruno.mvmmnews.models.Article
 import com.pedrobruno.mvmmnews.ui.NewsActivity
@@ -32,16 +33,31 @@ class ArticleFragment : Fragment() {
         viewModel = (activity as NewsActivity).viewModel
         getBundle()
         setupWebView()
+        saveArticle()
     }
 
-    fun getBundle(){
+    fun getBundle() {
         article = args.article
     }
 
-    fun setupWebView(){
+    fun setupWebView() {
         binding.webView.apply {
             webViewClient = WebViewClient()
             loadUrl(article.url)
+        }
+    }
+
+    fun saveArticle() {
+        binding.fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            view?.let { it1 ->
+                Snackbar.make(
+                    it1,
+                    "Article saved successfully",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
         }
     }
 }
